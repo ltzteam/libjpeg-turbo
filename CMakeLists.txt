@@ -173,7 +173,7 @@ macro(boolean_number var)
   endif()
 endmacro()
 
-option(ENABLE_SHARED "Build shared libraries" TRUE)
+option(ENABLE_SHARED "Build shared libraries" FALSE)
 boolean_number(ENABLE_SHARED)
 option(ENABLE_STATIC "Build static libraries" TRUE)
 boolean_number(ENABLE_STATIC)
@@ -193,7 +193,7 @@ else()
 endif()
 option(WITH_JPEG7 "Emulate libjpeg v7 API/ABI (this makes ${CMAKE_PROJECT_NAME} backward-incompatible with libjpeg v6b)" FALSE)
 boolean_number(WITH_JPEG7)
-option(WITH_JPEG8 "Emulate libjpeg v8 API/ABI (this makes ${CMAKE_PROJECT_NAME} backward-incompatible with libjpeg v6b)" FALSE)
+option(WITH_JPEG8 "Emulate libjpeg v8 API/ABI (this makes ${CMAKE_PROJECT_NAME} backward-incompatible with libjpeg v6b)" TRUE)
 boolean_number(WITH_JPEG8)
 option(WITH_MEM_SRCDST "Include in-memory source/destination manager functions when emulating the libjpeg v6b or v7 API/ABI" TRUE)
 boolean_number(WITH_MEM_SRCDST)
@@ -210,6 +210,8 @@ macro(report_option var desc)
     message(STATUS "${desc} disabled (${var} = ${${var}})")
   endif()
 endmacro()
+
+set(WITH_JAVA 0)
 
 if(WITH_JAVA)
   set(ENABLE_SHARED 1)
@@ -283,6 +285,7 @@ set(SO_AGE 2)
 if(WITH_MEM_SRCDST)
   set(SO_AGE 3)
 endif()
+
 
 if(WITH_JPEG8)
   set(JPEG_LIB_VERSION 80)
@@ -1464,8 +1467,8 @@ if(WITH_TURBOJPEG)
       else()
         set(DIR ${CMAKE_CURRENT_BINARY_DIR})
       endif()
-      install(PROGRAMS ${DIR}/tjbench-static${EXE}
-        DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME tjbench${EXE})
+      # install(PROGRAMS ${DIR}/tjbench-static${EXE}
+      #   DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME tjbench${EXE})
     endif()
   endif()
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/turbojpeg.h
@@ -1482,12 +1485,12 @@ if(ENABLE_STATIC)
     else()
       set(DIR ${CMAKE_CURRENT_BINARY_DIR})
     endif()
-    install(PROGRAMS ${DIR}/cjpeg-static${EXE}
-      DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME cjpeg${EXE})
-    install(PROGRAMS ${DIR}/djpeg-static${EXE}
-      DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME djpeg${EXE})
-    install(PROGRAMS ${DIR}/jpegtran-static${EXE}
-      DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME jpegtran${EXE})
+    # install(PROGRAMS ${DIR}/cjpeg-static${EXE}
+    #   DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME cjpeg${EXE})
+    # install(PROGRAMS ${DIR}/djpeg-static${EXE}
+    #   DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME djpeg${EXE})
+    # install(PROGRAMS ${DIR}/jpegtran-static${EXE}
+    #   DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME jpegtran${EXE})
   endif()
 endif()
 
